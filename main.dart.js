@@ -5964,7 +5964,7 @@ fT:function fT(){},
 xh:function xh(a){this.a=a},
 Ba:function Ba(){},
 xg:function xg(){}},L={
-Zo:function(a,b,c,d){return new L.oD(a,b,d,!0,null)},
+Zo:function(a,b,c,d){return new L.oD(a,b,d,c,null)},
 oD:function oD(a,b,c,d,e){var _=this
 _.c=a
 _.d=b
@@ -25486,8 +25486,7 @@ $S:150}
 L.Rw.prototype={
 $1:function(a){var t=this,s=document.createElement("iframe"),r=s.style
 r.border="0"
-t.a.a.f
-s.allowFullscreen=!0
+s.allowFullscreen=t.a.a.f
 s.height=C.h.h(J.fP(t.b))
 s.width=C.h.h(J.fP(t.c))
 s.src=t.d
@@ -45744,8 +45743,8 @@ $S:0}
 T.ot.prototype={
 aH:function(){return new T.Ch(C.r)}}
 T.Ch.prototype={
-I:function(a){var t=null,s="https://www.maheshwarravuri.com/bmicalculator/#/",r=new P.b5(16,16),q=u.D,p=new P.b5(16,16)
-return Q.NC(new T.dg(new S.a5(0,1/0,0,768),new T.cF(C.F,t,t,T.qF(H.c([new T.c2(380,480,Q.cR(t,C.mz,C.na),t),new T.c2(480,750,V.o9(!0,L.Zo(750,s,!0,480),t,t,8,new V.aD(10,4,10,4),new X.bW(C.v,new K.bz(r,r,r,r))),t)],q),C.eB,C.bv,C.dV),t),t),new T.cF(C.F,t,t,E.Ai(T.og(H.c([new T.c2(480,t,Q.cR(t,C.mz,C.na),t),new T.c2(480,750,new G.lx(!0,V.o9(!0,L.Zo(700,s,!0,420),t,t,4,new V.aD(32,32,32,32),new X.bW(C.v,new K.bz(p,p,p,p))),t),t)],q),C.az,C.dT,C.aT),t,t,C.l),t))}}
+I:function(a){var t=null,s="https://www.maheshwarravuri.com/bmicalculator/",r=new P.b5(16,16),q=u.D,p=new P.b5(16,16)
+return Q.NC(new T.dg(new S.a5(0,1/0,0,768),new T.cF(C.F,t,t,T.qF(H.c([new T.c2(380,480,Q.cR(t,C.mz,C.na),t),new T.c2(480,750,V.o9(!0,L.Zo(750,s,!0,480),t,t,8,new V.aD(10,4,10,4),new X.bW(C.v,new K.bz(r,r,r,r))),t)],q),C.eB,C.bv,C.dV),t),t),new T.cF(C.F,t,t,E.Ai(T.og(H.c([new T.c2(480,t,Q.cR(t,C.mz,C.na),t),new T.c2(480,750,new G.lx(!1,V.o9(!0,L.Zo(700,s,!1,420),t,t,4,new V.aD(32,32,32,32),new X.bW(C.v,new K.bz(p,p,p,p))),t),t)],q),C.az,C.dT,C.aT),t,t,C.l),t))}}
 M.Vw.prototype={
 $0:function(){$.vj().eV(0,C.eC,P.aQ(0,500,0))},
 $S:0}
