@@ -1,15 +1,16 @@
 'use strict';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "/index.html": "1bfb61524146286eba9013dc44e78f05",
-"/main.dart.js": "e2476925971792d1fad8dbef1c3582ed",
+  "/index.html": "bf8c982fee5e76959d5efb85310ed1d1",
+"/main.dart.js": "6d8360659ea5393c52811c046faf151f",
+"/favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "/icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "/icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"/manifest.json": "782e5d7e2ae16a67ce38cdf0d6c8bc96",
-"/assets/LICENSE": "483806f4ad98c8da8ce7374e4e082ccb",
-"/assets/AssetManifest.json": "25c3c37b0a29de2ab3c986a5924a53fa",
+"/manifest.json": "8dac79457f4be37e17ea00601cb7ecda",
+"/assets/LICENSE": "aaf113783c48c81eb575a9b2c951c55c",
+"/assets/AssetManifest.json": "9b54b850f320d591d077efa22315a2da",
 "/assets/FontManifest.json": "3f37122b8e6b96a2fb1bebbbde931143",
-"/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
+"/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "4b9123f59422885f8f42d2d613f0bca3",
 "/assets/packages/flutter_icons/fonts/Octicons.ttf": "73b8cff012825060b308d2162f31dbb2",
 "/assets/packages/flutter_icons/fonts/Feather.ttf": "6beba7e6834963f7f171d3bdd075c915",
 "/assets/packages/flutter_icons/fonts/Entypo.ttf": "744ce60078c17d86006dd0edabcd59a7",
@@ -26,7 +27,8 @@ const RESOURCES = {
 "/assets/packages/flutter_icons/fonts/EvilIcons.ttf": "140c53a7643ea949007aa9a282153849",
 "/assets/packages/flutter_icons/fonts/SimpleLineIcons.ttf": "d2285965fe34b05465047401b8595dd0",
 "/assets/packages/flutter_icons/fonts/MaterialIcons.ttf": "a37b0c01c0baf1888ca812cc0508f6e2",
-"/assets/fonts/MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
+"/assets/packages/flutter_markdown/assets/logo.png": "67642a0b80f3d50277c44cde8f450e50",
+"/assets/fonts/MaterialIcons-Regular.ttf": "c5589b7205a16dc844ff989718416259",
 "/assets/assets/images/Profile.jpg": "3247d86a7ee4d3fae76ff338286754e4",
 "/assets/assets/images/svg.png": "02ad9ee779a9705de91cc5619d7ebfc3",
 "/assets/assets/fonts/GoogleSans-Regular.ttf": "51134713ade7b1f137e06ce395d39d40",
@@ -53,9 +55,7 @@ self.addEventListener('fetch', function (event) {
         if (response) {
           return response;
         }
-        return fetch(event.request, {
-          credentials: 'include'
-        });
+        return fetch(event.request);
       })
   );
 });

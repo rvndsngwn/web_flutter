@@ -1,6 +1,6 @@
 {
-    "name": "portfolio_web",
-    "short_name": "portfolio_web",
+    "name": "PortfolioSource",
+    "short_name": "PortfolioSource",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
