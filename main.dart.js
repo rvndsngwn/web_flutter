@@ -12182,13 +12182,13 @@ p=b.a
 t=r/q>p/n?new P.V(p*q/n,q):new P.V(r,n*r/p)
 s=b
 break
-case C.ol:r=c.a
+case C.tH:r=c.a
 q=c.b
 p=b.a
 s=r/q>p/n?new P.V(p,p*q/r):new P.V(n*r/q,n)
 t=c
 break
-case C.tH:n=b.a
+case C.ol:n=b.a
 r=c.a
 q=n*c.b/r
 s=new P.V(n,q)
@@ -48769,8 +48769,8 @@ C.tF=new S.ao(48,1/0,48,1/0)
 C.tE=new S.ao(0,1/0,52,1/0)
 C.tG=new U.h7("BoxFit.fill")
 C.ok=new U.h7("BoxFit.contain")
-C.ol=new U.h7("BoxFit.cover")
-C.tH=new U.h7("BoxFit.fitWidth")
+C.tH=new U.h7("BoxFit.cover")
+C.ol=new U.h7("BoxFit.fitWidth")
 C.tI=new U.h7("BoxFit.fitHeight")
 C.tJ=new U.h7("BoxFit.none")
 C.kO=new U.h7("BoxFit.scaleDown")
