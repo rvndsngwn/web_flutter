@@ -1,7 +1,7 @@
 import 'package:easy_web_view/easy_web_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio_web/utils/Responsive.dart';
+import 'package:Portfolio/utils/Responsive.dart';
 
 class Demos extends StatefulWidget {
   const Demos({Key key}) : super(key: key);

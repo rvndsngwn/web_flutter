@@ -77,7 +77,7 @@ jobs:
         # Artifact name
         name: MacOS App
         # Directory containing files to upload
-        path: code/build/macos/Build/Products/Release/FlyX.app
+        path: code/build/macos/Build/Products/Release/PortfolioSource.app
 
     - name: Build Linux Version
       run: flutter build linux --tree-shake-icons -v

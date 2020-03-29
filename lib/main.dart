@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:portfolio_web/Shared/SubPages.dart';
-import 'package:portfolio_web/utils/Responsive.dart';
+import 'package:Portfolio/Shared/SubPages.dart';
+import 'package:Portfolio/utils/Responsive.dart';
 
 void main() async {
   await Hive.initFlutter();

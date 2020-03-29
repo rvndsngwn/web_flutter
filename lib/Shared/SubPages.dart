@@ -1,10 +1,10 @@
 import 'package:easy_web_view/easy_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:portfolio_web/Shared/AboutMe.dart';
-import 'package:portfolio_web/Shared/InfoCard.dart';
-import 'package:portfolio_web/Shared/Skills.dart';
-import 'package:portfolio_web/utils/Responsive.dart';
+import 'package:Portfolio/Shared/AboutMe.dart';
+import 'package:Portfolio/Shared/InfoCard.dart';
+import 'package:Portfolio/Shared/Skills.dart';
+import 'package:Portfolio/utils/Responsive.dart';
 
 final List<Widget> subPages = const <Widget>[
   ProfilePage(),
