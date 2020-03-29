@@ -1,0 +1,50 @@
+name: portfolio_web
+description: Personal Portfolio Website.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.6.1 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  #UI
+  flutter_icons:
+  cupertino_icons:
+  percent_indicator:
+  # flutter_page_indicators:
+  smooth_page_indicator:
+
+  #S\e
+  provider:
+  easy_web_view:
+  #common
+  intl:
+  hive:
+  hive_flutter:
+  flutter_staggered_animations:
+  url_launcher:
+  #ads
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  assets:
+    - assets/images/Profile.jpg
+    - assets/images/svg.png
+  fonts:
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway/Raleway-Regular.ttf
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/GoogleSans-Regular.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
+  uses-material-design: true

@@ -1,0 +1,128 @@
+name: Portfolio
+on:
+  pull_request:
+    branches:
+      - source
+  push:
+    branches:
+      - source
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+    # Set up Flutter and add it to the path.
+    - name: Clone Flutter repository with master channel.
+      uses: actions/checkout@v2
+      with:
+        repository: 'flutter/flutter'
+        ref: 'master'
+        path: 'flutter'
+        fetch-depth: 0
+    - name: Add Flutter to the PATH for Unix.
+      run: echo "::add-path::/$GITHUB_WORKSPACE/flutter/bin"
+      if: runner.os != 'Windows'
+    - name: Add Flutter to the PATH for Windows.
+      run: echo "::add-path::${env:GITHUB_WORKSPACE}\flutter\bin"
+      if: runner.os == 'Windows'
+    - name: Run Flutter doctor.
+      run: flutter doctor -v
+    - name: Clone this repository.
+      uses: actions/checkout@v2
+      with:
+        path: 'code'
+    - name: Get packages for the Flutter project.
+      run: flutter pub get
+      working-directory: code
+
+    # Enable experimental builds in flutter config
+    - name: Enable web builds
+      run: flutter config --enable-web
+      working-directory: code
+    - name: Enable MacOS builds
+      run: flutter config --enable-macos-desktop
+      working-directory: code
+      if: runner.os == 'macOS'
+    - name: Enable Windows builds
+      run: flutter config --enable-windows-desktop
+      working-directory: code
+      if: runner.os == 'Windows'
+    - name: Enable Linux builds
+      run: flutter config --enable-linux-desktop
+      working-directory: code
+      if: runner.os == 'Linux'
+    - name: Enable apk builds
+      run: flutter config --enable-android-embedding-v2
+      working-directory: code
+      if: runner.os == 'Windows'
+      
+    # Start Builds
+    - name: Build Windows Version
+      run: flutter build windows --tree-shake-icons -v
+      if: runner.os == 'Windows'
+      working-directory: code
+
+    - name: Build MacOS Version
+      run: flutter build macos --split-debug-info --obfuscate --tree-shake-icons -v
+      if: runner.os == 'macOS'
+      working-directory: code
+      continue-on-error: true
+    - name: Upload MacOS Desktop App
+      if: runner.os == 'macOS'
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: MacOS App
+        # Directory containing files to upload
+        path: code/build/macos/Build/Products/Release/FlyX.app
+
+    - name: Build Linux Version
+      run: flutter build linux --tree-shake-icons -v
+      if: runner.os == 'Linux'
+      working-directory: code
+
+    - name: Build iPhone / iPad app
+      run: flutter build ios --simulator --no-codesign --split-debug-info --obfuscate --tree-shake-icons -v
+      working-directory: code
+      if: runner.os == 'macOS'
+      continue-on-error: true
+
+    - name: Build Web version and Deploy
+      if: runner.os == 'Linux'
+      working-directory: code
+      run: |
+        flutter build web --csp --tree-shake-icons -v
+        cd build/web
+        git init
+        git config --global user.email mravuri96@gmail.com
+        git config --global user.name Maheshwar Ravuri
+        git status
+        git remote add origin https://${{secrets.commit_secret}}@github.com/Mravuri96/Mravuri96.github.io.git
+        git checkout -b master
+        git add --all
+        git commit -m "update"
+        git push origin master -f
+    - name: Upload Web Build Outputs
+      if: runner.os == 'Linux'
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: Web
+        # Directory containing files to upload
+        path: code/build/web/
+
+    - name: Android app
+      if: runner.os == 'Windows'
+      run: flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi --obfuscate --split-debug-info --tree-shake-icons -v
+      working-directory: code
+    - name: Upload Apks
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: Apks
+        # Directory containing files to upload
+        path: code/build/app/outputs/apk/release/
