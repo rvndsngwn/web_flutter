@@ -96,6 +96,7 @@ jobs:
       run: |
         flutter build web --csp --tree-shake-icons -v
         cd build/web
+        echo "www.maheshwarravuri.com\nmaheshwarravuri.com" >> CNAME
         git init
         git config --global user.email mravuri96@gmail.com
         git config --global user.name Maheshwar Ravuri
