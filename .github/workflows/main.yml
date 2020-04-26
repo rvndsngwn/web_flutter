@@ -38,7 +38,6 @@ jobs:
       - name: Get packages for the Flutter project and Run Code Generation.
         run: |
           flutter pub get
-          flutter pub run build_runner build --release --verbose --delete-conflicting-outputs
           flutter clean
         working-directory: code
 
