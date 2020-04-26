@@ -100,7 +100,7 @@ jobs:
         if: runner.os == 'Linux'
         working-directory: code
         run: |
-          mkdir -p build/web
+          flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true --dart-define=FLUTTER_WEB_USE_EXPERIMENTAL_CANVAS_TEXT=false --csp --tree-shake-icons -v
           cd build/web
           echo "www.maheshwarravuri.com" >> CNAME
           echo "maheshwarravuri.com" >> CNAME
@@ -108,14 +108,11 @@ jobs:
           git config --global user.email mravuri96@gmail.com
           git config --global user.name Maheshwar Ravuri
           git status
-          git remote add origin -m master https://${{secrets.commit_secret}}@github.com/Mravuri96/Mravuri96.github.io.git
-          git pull origin master
-          cd ../..
-          flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true --dart-define=FLUTTER_WEB_USE_EXPERIMENTAL_CANVAS_TEXT=false --csp --tree-shake-icons -v
-          cd build/web
-          git add -A
-          git commit -m "🚀"
-          git push origin master
+          git remote add origin https://${{secrets.commit_secret}}@github.com/Mravuri96/Mravuri96.github.io.git
+          git checkout -b master
+          git add --all
+          git commit -m "update"
+          git push origin master -f
 
       - name: Upload Web Build Outputs
         if: runner.os == 'Linux'
