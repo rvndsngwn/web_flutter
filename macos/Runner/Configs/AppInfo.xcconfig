@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = PortfolioSource
+PRODUCT_NAME = Portfolio
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.mahesh.PortfolioSource
+PRODUCT_BUNDLE_IDENTIFIER = com.example.Portfolio
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2020 com.mahesh. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2020 com.example. All rights reserved.

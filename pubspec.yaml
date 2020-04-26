@@ -4,7 +4,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-
+  flutter: ">=1.18.0-9.0.pre.6 <2.0.0"
 
 dependencies:
   flutter:
@@ -21,30 +21,29 @@ dependencies:
   easy_web_view:
   #common
   intl:
+  google_fonts:
   hive:
   hive_flutter:
+    git:
+      url: git://github.com/Mravuri96/hive.git #Enables macos Support
+      path: hive_flutter
+
   flutter_staggered_animations:
   url_launcher:
   #ads
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pedantic:
+  effective_dart:
+
+dependency_overrides:
+  dartx:
+  path:
 
 flutter:
-
   assets:
-    - assets/images/Profile.jpg
+    - assets/images/Profile.jpeg
     - assets/images/svg.png
-  fonts:
-    - family: Raleway
-      fonts:
-        - asset: assets/fonts/Raleway/Raleway-Regular.ttf
-    - family: GoogleSans
-      fonts:
-        - asset: assets/fonts/GoogleSans-Regular.ttf
-    - family: Montserrat
-      fonts:
-        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
   uses-material-design: true
