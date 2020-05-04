@@ -12,7 +12,6 @@ import 'package:flutter/material.dart'
         Center,
         CircleAvatar,
         CircleBorder,
-        Colors,
         Column,
         ConstrainedBox,
         EdgeInsets,
@@ -20,6 +19,7 @@ import 'package:flutter/material.dart'
         GridView,
         Icon,
         IconButton,
+        IconTheme,
         Icons,
         Image,
         Key,
@@ -44,6 +44,7 @@ import 'package:flutter/material.dart'
         ToolbarOptions,
         Tooltip,
         ValueListenableBuilder,
+        VisualDensity,
         Widget,
         WidgetsFlutterBinding,
         Wrap,
@@ -84,9 +85,14 @@ class Home extends StatelessWidget {
         final _isDarkMode = box.get('darkMode', defaultValue: false);
         return MaterialApp(
           themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          darkTheme: ThemeData.dark(),
+          darkTheme: ThemeData.dark()
+              .copyWith(visualDensity: VisualDensity.adaptivePlatformDensity),
+          theme: ThemeData.light()
+              .copyWith(visualDensity: VisualDensity.adaptivePlatformDensity),
           home: Scaffold(
-            body: const HomePage(),
+            body: const Center(
+              child: HomePage(),
+            ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => box.put('darkMode', !_isDarkMode),
               child: Icon(_isDarkMode ? FontAwesome.sun_o : FontAwesome.moon_o),
@@ -107,26 +113,30 @@ class HomePage extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
+        addRepaintBoundaries: true,
+        addAutomaticKeepAlives: true,
+        primary: true,
         children: <Widget>[
           const SizedBox(
             height: 64,
           ),
           Wrap(
-            runAlignment: WrapAlignment.spaceAround,
-            alignment: WrapAlignment.spaceAround,
+            alignment: WrapAlignment.center,
+            runSpacing: 32,
+            spacing: 64,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: const [
               CircleAvatar(
                 minRadius: 50,
-                maxRadius: 250,
+                maxRadius: 240,
                 backgroundImage: AssetImage(
                   'assets/images/Profile.jpeg',
                 ),
               ),
               SizedBox(
-                width: 575,
+                width: 500,
                 child: Card(
-                  elevation: 8,
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(24)),
                   ),
@@ -139,18 +149,21 @@ class HomePage extends StatelessWidget {
             height: 64,
           ),
           Wrap(
-            runAlignment: WrapAlignment.spaceAround,
-            alignment: WrapAlignment.spaceAround,
+            runAlignment: WrapAlignment.center,
+            runSpacing: 32,
+            spacing: 64,
+            alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Image.asset(
                 'assets/images/svg.png',
                 width: 500,
+                isAntiAlias: true,
               ),
               const SizedBox(
                 width: 500,
                 child: Card(
-                  elevation: 8,
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(24)),
                   ),
@@ -167,8 +180,10 @@ class HomePage extends StatelessWidget {
             height: 64,
           ),
           Wrap(
-            runAlignment: WrapAlignment.spaceAround,
-            alignment: WrapAlignment.spaceAround,
+            runAlignment: WrapAlignment.center,
+            alignment: WrapAlignment.center,
+            runSpacing: 32,
+            spacing: 64,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: const [
               TechnicalSkills(),
@@ -176,9 +191,9 @@ class HomePage extends StatelessWidget {
             ]
                 .map(
                   (e) => SizedBox(
-                    width: 575,
+                    width: 500,
                     child: Card(
-                      elevation: 8,
+                      elevation: 2,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(24)),
                       ),
@@ -204,25 +219,20 @@ class Info extends StatelessWidget {
       shrinkWrap: true,
       padding: const EdgeInsets.all(24),
       children: [
-        const Align(
-          child: Card(
-            elevation: 8,
-            margin: EdgeInsets.all(8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(24)),
-            ),
-            color: Colors.green,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 36, vertical: 8),
-              child: Text(
-                "Hello I'm",
-                textScaleFactor: 1.5,
-              ),
+        Align(
+          child: FloatingActionButton.extended(
+            shape: const StadiumBorder(),
+            highlightElevation: 2,
+            elevation: 2,
+            onPressed: null,
+            label: const Text(
+              "Hello I'm",
+              textScaleFactor: 1.5,
             ),
           ),
         ),
         const SizedBox(
-          height: 8,
+          height: 16,
         ),
         const ListTile(
           leading: Icon(Icons.account_circle),
@@ -274,14 +284,17 @@ class Info extends StatelessWidget {
                 (e) => Tooltip(
                   message: 'Visit ${e.last}',
                   child: RaisedButton(
-                    color: Theme.of(context).cardColor,
+                    color: Theme.of(context).accentColor,
                     shape: const CircleBorder(),
                     onPressed: () async {
                       if (await canLaunch(e.last)) {
                         await launch(e.last);
                       }
                     },
-                    child: Icon(e.first),
+                    child: Icon(
+                      e.first,
+                      size: IconTheme.of(context).size - 4,
+                    ),
                   ),
                 ),
               )
@@ -334,7 +347,7 @@ class TechnicalSkills extends StatelessWidget {
                   lineHeight: 15,
                   animationDuration: 1500,
                   animation: true,
-                  progressColor: Colors.green,
+                  progressColor: Theme.of(context).accentColor,
                   addAutomaticKeepAlive: true,
                   linearStrokeCap: LinearStrokeCap.roundAll,
                 ),
@@ -365,7 +378,7 @@ class ProfessionalSkills extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 64,
+          height: 32,
         ),
         GridView.count(
           shrinkWrap: true,
@@ -384,7 +397,7 @@ class ProfessionalSkills extends StatelessWidget {
                   radius: 120,
                   animationDuration: 1500,
                   animation: true,
-                  progressColor: Colors.green,
+                  progressColor: Theme.of(context).accentColor,
                   addAutomaticKeepAlive: true,
                   circularStrokeCap: CircularStrokeCap.round,
                   footer: Text(
@@ -422,17 +435,21 @@ class AboutMe extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 64,
+          height: 32,
         ),
         const ListTile(
           title: Text(
-            'Experienced Mobile Developer, skilled in Cross-Platform ( Flutter )',
+            'I.T. admin by day. Flutter enthusiast by night.',
           ),
+        ),
+        const SizedBox(
+          height: 32,
         ),
         Wrap(
           runAlignment: WrapAlignment.spaceAround,
           alignment: WrapAlignment.spaceAround,
           crossAxisAlignment: WrapCrossAlignment.center,
+          runSpacing: 16,
           children: [
             ['Dart', 'https://dart.dev/'],
             ['Flutter', 'https://flutter.dev/'],
@@ -440,18 +457,17 @@ class AboutMe extends StatelessWidget {
             ['Python', 'https://www.python.org/'],
           ]
               .map(
-                (e) => Tooltip(
-                  message: 'Visit ${e.first} homepage',
-                  child: RaisedButton(
-                    shape: const StadiumBorder(),
-                    color: Theme.of(context).cardColor,
-                    onPressed: () async {
-                      if (await canLaunch(e.last)) {
-                        await launch(e.last);
-                      }
-                    },
-                    child: Text(e.first),
-                  ),
+                (e) => FloatingActionButton.extended(
+                  highlightElevation: 2,
+                  elevation: 2,
+                  tooltip: 'Visit ${e.first} homepage',
+                  shape: const StadiumBorder(),
+                  onPressed: () async {
+                    if (await canLaunch(e.last)) {
+                      await launch(e.last);
+                    }
+                  },
+                  label: Text(e.first),
                 ),
               )
               .toList(),
@@ -478,8 +494,8 @@ class ProjectShowCase extends StatelessWidget {
           height: 64,
         ),
         Wrap(
-          runAlignment: WrapAlignment.spaceAround,
-          alignment: WrapAlignment.spaceAround,
+          runAlignment: WrapAlignment.spaceEvenly,
+          alignment: WrapAlignment.spaceEvenly,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             [
@@ -500,7 +516,7 @@ class ProjectShowCase extends StatelessWidget {
                     maxWidth: 500,
                   ),
                   child: Card(
-                    elevation: 8,
+                    elevation: 2,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                     child: Center(
@@ -514,7 +530,10 @@ class ProjectShowCase extends StatelessWidget {
                         ),
                         trailing: IconButton(
                           tooltip: 'Vist ${e.first}',
-                          icon: const Icon(Icons.open_in_new),
+                          icon: Icon(
+                            Icons.open_in_new,
+                            color: Theme.of(context).accentColor,
+                          ),
                           onPressed: () async {
                             if (await canLaunch(e.last)) {
                               await launch(e.last);

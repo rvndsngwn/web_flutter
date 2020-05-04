@@ -79,7 +79,7 @@ jobs:
           # Artifact name
           name: MacOS App
           # Directory containing files to upload
-          path: code/build/macos/Build/Products/Release/PortfolioSource.app
+          path: code/build/macos/Build/Products/Release/Portfolio.app
 
       - name: Build iPhone / iPad app
         run: flutter build ios --simulator --no-codesign --split-debug-info --obfuscate --tree-shake-icons -v
