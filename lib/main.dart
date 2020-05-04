@@ -1,56 +1,4 @@
-import 'package:flutter/material.dart'
-    show
-        Align,
-        AssetImage,
-        Axis,
-        BorderRadius,
-        BouncingScrollPhysics,
-        BoxConstraints,
-        BuildContext,
-        ButtonBar,
-        Card,
-        Center,
-        CircleAvatar,
-        CircleBorder,
-        Column,
-        ConstrainedBox,
-        EdgeInsets,
-        FloatingActionButton,
-        GridView,
-        Icon,
-        IconButton,
-        IconTheme,
-        Icons,
-        Image,
-        Key,
-        ListTile,
-        ListView,
-        MaterialApp,
-        NeverScrollableScrollPhysics,
-        Padding,
-        Radius,
-        RaisedButton,
-        RoundedRectangleBorder,
-        Scaffold,
-        Scrollbar,
-        SelectableText,
-        SizedBox,
-        StadiumBorder,
-        StatelessWidget,
-        Text,
-        Theme,
-        ThemeData,
-        ThemeMode,
-        ToolbarOptions,
-        Tooltip,
-        ValueListenableBuilder,
-        VisualDensity,
-        Widget,
-        WidgetsFlutterBinding,
-        Wrap,
-        WrapAlignment,
-        WrapCrossAlignment,
-        runApp;
+import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart'
     show FontAwesome, FontAwesome5Brands;
 import 'package:hive/hive.dart' show Hive;
@@ -122,18 +70,27 @@ class HomePage extends StatelessWidget {
           ),
           Wrap(
             alignment: WrapAlignment.center,
-            runSpacing: 32,
+            runSpacing: 64,
             spacing: 64,
             crossAxisAlignment: WrapCrossAlignment.center,
-            children: const [
-              CircleAvatar(
-                minRadius: 50,
-                maxRadius: 240,
-                backgroundImage: AssetImage(
-                  'assets/images/Profile.jpeg',
-                ),
+            children: [
+              Image.asset(
+                'assets/images/Profile.png',
+                width: 436,
+                isAntiAlias: true,
+                frameBuilder:
+                    (_, Widget child, int frame, bool wasSynchronouslyLoaded) {
+                  return wasSynchronouslyLoaded
+                      ? child
+                      : AnimatedOpacity(
+                          opacity: frame == null ? 0 : 1,
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.easeOut,
+                          child: child,
+                        );
+                },
               ),
-              SizedBox(
+              const SizedBox(
                 width: 500,
                 child: Card(
                   elevation: 2,
@@ -157,8 +114,19 @@ class HomePage extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/svg.png',
-                width: 500,
+                width: 436,
                 isAntiAlias: true,
+                frameBuilder:
+                    (_, Widget child, int frame, bool wasSynchronouslyLoaded) {
+                  return wasSynchronouslyLoaded
+                      ? child
+                      : AnimatedOpacity(
+                          opacity: frame == null ? 0 : 1,
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.easeOut,
+                          child: child,
+                        );
+                },
               ),
               const SizedBox(
                 width: 500,
@@ -273,6 +241,7 @@ class Info extends StatelessWidget {
                   toolbarOptions: const ToolbarOptions(
                     copy: true,
                     selectAll: true,
+                    cut: true,
                   ),
                 ),
               ),
@@ -511,7 +480,7 @@ class ProjectShowCase extends StatelessWidget {
             [
               'Bmi Calculator',
               'Simple Bmi Calculator',
-              'https://maheshwarravuri.com/bmicalc/'
+              'https://www.maheshwarravuri.com/bmicalc/#/'
             ],
           ]
               .map(

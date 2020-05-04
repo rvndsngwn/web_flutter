@@ -111,7 +111,7 @@ jobs:
           git remote add origin https://${{secrets.commit_secret}}@github.com/Mravuri96/Mravuri96.github.io.git
           git checkout -b master
           git add --all
-          git commit -m "update"
+          git commit -m "🚀"
           git push origin master -f
 
       - name: Upload Web Build Outputs

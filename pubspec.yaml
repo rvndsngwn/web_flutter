@@ -44,6 +44,6 @@ dependency_overrides:
 
 flutter:
   assets:
-    - assets/images/Profile.jpeg
+    - assets/images/Profile.png
     - assets/images/svg.png
   uses-material-design: true
