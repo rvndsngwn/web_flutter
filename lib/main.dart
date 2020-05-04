@@ -203,6 +203,9 @@ class HomePage extends StatelessWidget {
                 )
                 .toList(),
           ),
+          const SizedBox(
+            height: 64,
+          ),
         ],
       ),
     );
@@ -324,7 +327,7 @@ class TechnicalSkills extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 64,
+          height: 16,
         ),
         ...[
           ['Flutter', .85],
@@ -378,7 +381,7 @@ class ProfessionalSkills extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 32,
+          height: 16,
         ),
         GridView.count(
           shrinkWrap: true,
@@ -491,11 +494,13 @@ class ProjectShowCase extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 64,
+          height: 32,
         ),
         Wrap(
-          runAlignment: WrapAlignment.spaceEvenly,
-          alignment: WrapAlignment.spaceEvenly,
+          runAlignment: WrapAlignment.center,
+          alignment: WrapAlignment.center,
+          runSpacing: 32,
+          spacing: 64,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             [

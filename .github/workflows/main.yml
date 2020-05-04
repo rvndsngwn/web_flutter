@@ -100,7 +100,7 @@ jobs:
         if: runner.os == 'Linux'
         working-directory: code
         run: |
-          flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true --dart-define=FLUTTER_WEB_USE_EXPERIMENTAL_CANVAS_TEXT=false --csp --tree-shake-icons -v
+          flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true --dart-define=FLUTTER_WEB_ENABLE_PROFILING=false --dart-define=FLUTTER_WEB_USE_EXPERIMENTAL_CANVAS_TEXT=false --csp --tree-shake-icons -v
           cd build/web
           echo "www.maheshwarravuri.com" >> CNAME
           echo "maheshwarravuri.com" >> CNAME
