@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart'
     show FontAwesome, FontAwesome5Brands;
 import 'package:hive/hive.dart' show Hive;
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart'
-    show CircularPercentIndicator, CircularStrokeCap;
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:percent_indicator/linear_percent_indicator.dart'
     show LinearPercentIndicator, LinearStrokeCap;
+import 'package:string_validator/string_validator.dart'
+    show isEmail, isLength, isNumeric, normalizeEmail, stripLow, toString;
 import 'package:url_launcher/url_launcher.dart' show canLaunch, launch;
+import 'package:dio/dio.dart' show Dio;
 
 Future<void> main() async => Hive.initFlutter()
     .whenComplete(
@@ -59,6 +62,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scrollbar(
       child: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         addRepaintBoundaries: true,
@@ -249,7 +253,7 @@ class Info extends StatelessWidget {
             .toList(),
         ButtonBar(
           children: [
-            [FontAwesome5Brands.github, 'https://github.com/Mravuri96'],
+            [FontAwesome5Brands.github, 'https://github.com/Mravuri86'],
             [FontAwesome5Brands.twitter, 'https://twitter.com/MaheshwarRavuri']
           ]
               .map(
@@ -272,113 +276,6 @@ class Info extends StatelessWidget {
               )
               .toList(),
         )
-      ],
-    );
-  }
-}
-
-class TechnicalSkills extends StatelessWidget {
-  const TechnicalSkills({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(
-        24,
-      ),
-      children: [
-        const Align(
-          child: Text(
-            'Technical Skills',
-            textScaleFactor: 2,
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        ...[
-          ['Flutter', .85],
-          ['Dart', .75],
-          ['C#', .5],
-          ['C++', .5],
-          ['git', .85],
-          ['Python', .5]
-        ]
-            .map(
-              (e) => ListTile(
-                title: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text(
-                    e.first,
-                  ),
-                ),
-                subtitle: LinearPercentIndicator(
-                  percent: e.last,
-                  lineHeight: 15,
-                  animationDuration: 1500,
-                  animation: true,
-                  progressColor: Theme.of(context).accentColor,
-                  addAutomaticKeepAlive: true,
-                  linearStrokeCap: LinearStrokeCap.roundAll,
-                ),
-              ),
-            )
-            .toList(),
-      ],
-    );
-  }
-}
-
-class ProfessionalSkills extends StatelessWidget {
-  const ProfessionalSkills({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(
-        24,
-      ),
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        const Align(
-          child: Text(
-            'Professional Skills',
-            textScaleFactor: 2,
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          children: [
-            ['Communication', .85],
-            ['Team Work', .75],
-            ['Creativity', .65],
-            ['Project Management', .85],
-          ]
-              .map(
-                (e) => CircularPercentIndicator(
-                  percent: e.last,
-                  lineWidth: 15,
-                  radius: 120,
-                  animationDuration: 1500,
-                  animation: true,
-                  progressColor: Theme.of(context).accentColor,
-                  addAutomaticKeepAlive: true,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  footer: Text(
-                    e.first,
-                  ),
-                ),
-              )
-              .toList(),
-        ),
       ],
     );
   }
@@ -521,6 +418,238 @@ class ProjectShowCase extends StatelessWidget {
               )
               .toList(),
         ),
+      ],
+    );
+  }
+}
+
+class TechnicalSkills extends StatelessWidget {
+  const TechnicalSkills({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(
+        24,
+      ),
+      children: [
+        const Align(
+          child: Text(
+            'Technical Skills',
+            textScaleFactor: 2,
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        ...[
+          ['Flutter', .85],
+          ['Dart', .75],
+          ['C#', .5],
+          ['C++', .5],
+          ['git', .85],
+          ['Python', .5]
+        ]
+            .map(
+              (e) => ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(
+                    e.first,
+                  ),
+                ),
+                subtitle: LinearPercentIndicator(
+                  percent: e.last,
+                  lineHeight: 15,
+                  animationDuration: 1500,
+                  animation: true,
+                  progressColor: Theme.of(context).accentColor,
+                  addAutomaticKeepAlive: true,
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                ),
+              ),
+            )
+            .toList(),
+      ],
+    );
+  }
+}
+
+class ProfessionalSkills extends StatefulWidget {
+  const ProfessionalSkills({Key key}) : super(key: key);
+
+  @override
+  _ProfessionalSkillsState createState() => _ProfessionalSkillsState();
+}
+
+class _ProfessionalSkillsState extends State<ProfessionalSkills> {
+  final _formKey = GlobalKey<FormState>();
+  String name, phone, email, message;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(
+        24,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        const Align(
+          child: Text(
+            'Contact Me',
+            textScaleFactor: 2,
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Form(
+          key: _formKey,
+          child: ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(18),
+                    ),
+                  ),
+                  prefixIcon: Icon(Icons.person),
+                ),
+                validator: (value) =>
+                    value.isEmpty ? 'Name cannot be empty' : null,
+                onChanged: (value) => setState(() {
+                  name = value.trim();
+                }),
+                keyboardType: TextInputType.text,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(18),
+                    ),
+                  ),
+                  prefixIcon: Icon(Icons.phone),
+                ),
+                keyboardType: TextInputType.phone,
+                onChanged: (value) => setState(
+                  () {
+                    if (isNumeric(value)) {
+                      phone = value;
+                    }
+                  },
+                ),
+                validator: (value) => !isNumeric(value)
+                    ? 'Invalid PhoneNumber'
+                    : !isLength(value, 4, 22) ? 'Invalid PhoneNumber' : null,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(18),
+                    ),
+                  ),
+                  prefixIcon: Icon(Icons.email),
+                ),
+                validator: (value) => value.isEmpty
+                    ? 'Email cannot be empty'
+                    : !isEmail(value) ? 'Invalid Email' : null,
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (value) => setState(
+                  () {
+                    if (isEmail(value)) {
+                      email = toString(normalizeEmail(value)).trim();
+                    }
+                  },
+                ),
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(18),
+                    ),
+                  ),
+                  labelText: 'Message',
+                  helperMaxLines: 7,
+                  hintMaxLines: 7,
+                  prefixIcon: Icon(Icons.speaker_notes),
+                ),
+                validator: (value) =>
+                    value.isEmpty ? 'Description cannot be empty' : null,
+                onChanged: (value) => setState(() {
+                  message = stripLow(toString(value)).trim();
+                }),
+                keyboardType: TextInputType.multiline,
+                maxLines: 7,
+              ),
+              Center(
+                child: FloatingActionButton.extended(
+                  elevation: 2,
+                  highlightElevation: 4,
+                  tooltip: 'Sumbit Details',
+                  hoverElevation: 4,
+                  icon: const Icon(Icons.send),
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      final _timestamp =
+                          DateFormat('yMMMd').add_jms().format(DateTime.now());
+                      final _ipData = '?name='
+                          '$name'
+                          '&phone=$phone'
+                          '&email=$email'
+                          '&Message=$message'
+                          '&timestamp=${_timestamp.trim()}';
+                      const url =
+                          'https://script.google.com/macros/s/AKfycbyQNVoxSjwWskTGpjO5ad11syVkcC3y-WLmalFsBn_8ujeFV3-B/exec';
+
+                      try {
+                        await Dio()
+                            .get(
+                              url + _ipData,
+                            )
+                            .then(
+                              (value) => value.statusCode == 200
+                                  ? Scaffold.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Submission Recevied',
+                                        ),
+                                      ),
+                                    )
+                                  : Scaffold.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Insufficient information provided',
+                                        ),
+                                      ),
+                                    ),
+                            );
+                      } on Exception catch (e) {
+                        Exception(e);
+                      }
+                    }
+                  },
+                  label: const Text('Send'),
+                ),
+              ),
+            ]
+                .map(
+                  (e) => Padding(padding: const EdgeInsets.all(8), child: e),
+                )
+                .toList(),
+          ),
+        )
       ],
     );
   }

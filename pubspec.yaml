@@ -23,6 +23,9 @@ dependencies:
   intl:
   google_fonts:
   hive:
+  dio:
+  logger:
+  string_validator:
   hive_flutter:
     git:
       url: git://github.com/Mravuri96/hive.git #Enables macos Support
