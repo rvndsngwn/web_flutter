@@ -220,7 +220,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: const [
               TechnicalSkills(),
-              ProfessionalSkills(),
+              ContactMe(),
             ]
                 .map(
                   (e) => SizedBox(
@@ -538,14 +538,14 @@ class TechnicalSkills extends StatelessWidget {
   }
 }
 
-class ProfessionalSkills extends StatefulWidget {
-  const ProfessionalSkills({Key key}) : super(key: key);
+class ContactMe extends StatefulWidget {
+  const ContactMe({Key key}) : super(key: key);
 
   @override
-  _ProfessionalSkillsState createState() => _ProfessionalSkillsState();
+  _ContactMeState createState() => _ContactMeState();
 }
 
-class _ProfessionalSkillsState extends State<ProfessionalSkills> {
+class _ContactMeState extends State<ContactMe> {
   final _formKey = GlobalKey<FormState>();
   String name, phone, email, message;
 
@@ -663,14 +663,18 @@ class _ProfessionalSkillsState extends State<ProfessionalSkills> {
                   icon: const Icon(Icons.send),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
-                      final _timestamp =
-                          DateFormat('yMMMd').add_jms().format(DateTime.now());
+                      final _timestamp = DateFormat('yMMMd')
+                          .add_jms()
+                          .format(
+                            DateTime.now(),
+                          )
+                          .trim();
                       final _ipData = '?name='
                           '$name'
                           '&phone=$phone'
                           '&email=$email'
                           '&Message=$message'
-                          '&timestamp=${_timestamp.trim()}';
+                          '&timestamp=$_timestamp';
                       const url =
                           'https://script.google.com/macros/s/AKfycbyQNVoxSjwWskTGpjO5ad11syVkcC3y-WLmalFsBn_8ujeFV3-B/exec';
 

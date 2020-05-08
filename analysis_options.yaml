@@ -1,7 +1,7 @@
 include: linter_rules.yaml
 
 analyzer:
-  exclude: [lib/**/*.g.dart, lib/**/*.freezed.dart, lib-old ]
+  exclude: [lib/**/*.g.dart, lib/**/*.freezed.dart]
   strong-mode:
     implicit-casts: true
     implicit-dynamic: true
