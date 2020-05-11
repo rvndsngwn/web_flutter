@@ -314,7 +314,7 @@ class Info extends StatelessWidget {
             .toList(),
         ButtonBar(
           children: [
-            [FontAwesome5Brands.github, 'https://github.com/Mravuri86'],
+            [FontAwesome5Brands.github, 'https://github.com/Mravuri96'],
             [FontAwesome5Brands.twitter, 'https://twitter.com/MaheshwarRavuri']
           ]
               .map(
