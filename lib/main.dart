@@ -547,7 +547,7 @@ class ContactMe extends StatefulWidget {
 
 class _ContactMeState extends State<ContactMe> {
   final _formKey = GlobalKey<FormState>();
-  String name, phone, email, message;
+  String name, phone, email, details;
 
   @override
   Widget build(BuildContext context) {
@@ -648,9 +648,8 @@ class _ContactMeState extends State<ContactMe> {
                 ),
                 validator: (value) =>
                     value.isEmpty ? 'Description cannot be empty' : null,
-                onChanged: (value) => setState(() {
-                  message = stripLow(toString(value)).trim();
-                }),
+                onChanged: (value) =>
+                    setState(() => details = stripLow(toString(value)).trim()),
                 keyboardType: TextInputType.multiline,
                 maxLines: 7,
               ),
@@ -673,7 +672,7 @@ class _ContactMeState extends State<ContactMe> {
                           '$name'
                           '&phone=$phone'
                           '&email=$email'
-                          '&Message=$message'
+                          '&details=$details'
                           '&timestamp=$_timestamp';
                       const url =
                           'https://script.google.com/macros/s/AKfycbyQNVoxSjwWskTGpjO5ad11syVkcC3y-WLmalFsBn_8ujeFV3-B/exec';
