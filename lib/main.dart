@@ -14,6 +14,7 @@ import 'package:flutter/material.dart'
         Colors,
         Column,
         ConstrainedBox,
+        CrossAxisAlignment,
         Curves,
         EdgeInsets,
         FloatingActionButton,
@@ -248,6 +249,13 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 64,
             ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 32),
+                child: Text(
+                    '© ${DateTime.now().year} Maheshwar Ravuri. All rights reserved.'),
+              ),
+            )
           ],
         ),
       );
@@ -451,6 +459,11 @@ class ProjectShowCase extends StatelessWidget {
                 'Watch 8000+ publicly available IPTV channels within your browser',
                 'http://www.maheshwarravuri.com/IPTV-Viewer/'
               ],
+              [
+                'VR Planetarium',
+                'Modernized the planetarium experience using virtual reality',
+                'https://store.steampowered.com/app/1313970/PlanetariumVR/'
+              ],
             ]
                 .map(
                   (e) => ConstrainedBox(
@@ -468,8 +481,11 @@ class ProjectShowCase extends StatelessWidget {
                             e.first,
                             textScaleFactor: 2,
                           ),
-                          subtitle: Text(
-                            e.elementAt(1),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              e.elementAt(1),
+                            ),
                           ),
                           trailing: IconButton(
                             tooltip: 'Vist ${e.first}',
