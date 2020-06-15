@@ -23,9 +23,10 @@ endfunction()
 set(FLUTTER_LIBRARY "${EPHEMERAL_DIR}/libflutter_linux_glfw.so")
 
 # Published to parent scope for install step.
-set(FLUTTER_LIBRARY_DIR "${EPHEMERAL_DIR}" PARENT_SCOPE)
+set(FLUTTER_LIBRARY ${FLUTTER_LIBRARY} PARENT_SCOPE)
 set(FLUTTER_ICU_DATA_FILE "${EPHEMERAL_DIR}/icudtl.dat" PARENT_SCOPE)
 set(PROJECT_BUILD_DIR "${PROJECT_DIR}/build/" PARENT_SCOPE)
+set(AOT_LIBRARY "${PROJECT_DIR}/build/lib/libapp.so" PARENT_SCOPE)
 
 list(APPEND FLUTTER_LIBRARY_HEADERS
   "flutter_export.h"
@@ -65,6 +66,8 @@ add_library(flutter_wrapper_plugin STATIC
 apply_standard_settings(flutter_wrapper_plugin)
 set_target_properties(flutter_wrapper_plugin PROPERTIES
   POSITION_INDEPENDENT_CODE ON)
+set_target_properties(flutter_wrapper_plugin PROPERTIES
+  CXX_VISIBILITY_PRESET hidden)
 target_link_libraries(flutter_wrapper_plugin PUBLIC flutter)
 target_include_directories(flutter_wrapper_plugin PUBLIC
   "${WRAPPER_ROOT}/include"

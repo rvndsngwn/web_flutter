@@ -2,10 +2,6 @@ name: Portfolio
 description: Personal Portfolio Website.
 version: 1.0.0+1
 
-environment:
-  sdk:
-  flutter:
-
 dependencies:
   flutter:
     sdk: flutter

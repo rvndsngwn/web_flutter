@@ -2,7 +2,6 @@ import 'package:flutter/material.dart'
     show
         Align,
         AnimatedOpacity,
-        Axis,
         BorderRadius,
         BouncingScrollPhysics,
         BoxConstraints,
@@ -14,7 +13,6 @@ import 'package:flutter/material.dart'
         Colors,
         Column,
         ConstrainedBox,
-        CrossAxisAlignment,
         Curves,
         EdgeInsets,
         FloatingActionButton,
@@ -31,6 +29,7 @@ import 'package:flutter/material.dart'
         ListTile,
         ListView,
         MaterialApp,
+        MaterialStateMouseCursor,
         NeverScrollableScrollPhysics,
         OutlineInputBorder,
         Padding,
@@ -117,6 +116,7 @@ class Home extends StatelessWidget {
                 child: HomePage(),
               ),
               floatingActionButton: FloatingActionButton(
+                mouseCursor: MaterialStateMouseCursor.clickable,
                 onPressed: () => box.put('darkMode', !_isDarkMode),
                 child:
                     Icon(_isDarkMode ? FontAwesome.sun_o : FontAwesome.moon_o),
@@ -134,10 +134,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) => Scrollbar(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 4),
-          scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
-          addRepaintBoundaries: true,
-          addAutomaticKeepAlives: true,
           primary: true,
           children: <Widget>[
             const SizedBox(
@@ -339,6 +336,7 @@ class Info extends StatelessWidget {
                   (e) => Tooltip(
                     message: 'Visit ${e.last}',
                     child: RaisedButton(
+                      mouseCursor: MaterialStateMouseCursor.clickable,
                       color: Theme.of(context).accentColor,
                       shape: const CircleBorder(),
                       onPressed: () async {
@@ -404,6 +402,7 @@ class AboutMe extends StatelessWidget {
             ]
                 .map(
                   (e) => FloatingActionButton.extended(
+                    mouseCursor: MaterialStateMouseCursor.clickable,
                     highlightElevation: 2,
                     elevation: 2,
                     tooltip: 'Visit ${e.first} homepage',
@@ -488,6 +487,7 @@ class ProjectShowCase extends StatelessWidget {
                             ),
                           ),
                           trailing: IconButton(
+                            mouseCursor: MaterialStateMouseCursor.clickable,
                             tooltip: 'Vist ${e.first}',
                             icon: Icon(
                               Icons.open_in_new,
@@ -552,7 +552,6 @@ class TechnicalSkills extends StatelessWidget {
                     animationDuration: 1500,
                     animation: true,
                     progressColor: Theme.of(context).accentColor,
-                    addAutomaticKeepAlive: true,
                     linearStrokeCap: LinearStrokeCap.roundAll,
                   ),
                 ),
@@ -678,6 +677,7 @@ class _ContactMeState extends State<ContactMe> {
                 ),
                 Center(
                   child: FloatingActionButton.extended(
+                    mouseCursor: MaterialStateMouseCursor.clickable,
                     elevation: 2,
                     highlightElevation: 4,
                     tooltip: 'Submit Details',
