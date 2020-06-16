@@ -1,69 +1,8 @@
-import 'package:flutter/material.dart'
-    show
-        Align,
-        AnimatedOpacity,
-        BorderRadius,
-        BouncingScrollPhysics,
-        BoxConstraints,
-        BuildContext,
-        ButtonBar,
-        Card,
-        Center,
-        CircleBorder,
-        Colors,
-        Column,
-        ConstrainedBox,
-        Curves,
-        EdgeInsets,
-        FloatingActionButton,
-        Form,
-        FormState,
-        GlobalKey,
-        Icon,
-        IconButton,
-        IconTheme,
-        Icons,
-        Image,
-        InputDecoration,
-        Key,
-        ListTile,
-        ListView,
-        MaterialApp,
-        MaterialStateMouseCursor,
-        NeverScrollableScrollPhysics,
-        OutlineInputBorder,
-        Padding,
-        Radius,
-        RaisedButton,
-        RoundedRectangleBorder,
-        Scaffold,
-        Scrollbar,
-        SelectableText,
-        SizedBox,
-        SnackBar,
-        StadiumBorder,
-        State,
-        StatefulWidget,
-        StatelessWidget,
-        Text,
-        TextFormField,
-        TextInputType,
-        Theme,
-        ThemeData,
-        ThemeMode,
-        ToolbarOptions,
-        Tooltip,
-        ValueListenableBuilder,
-        VisualDensity,
-        Widget,
-        WidgetsFlutterBinding,
-        Wrap,
-        WrapAlignment,
-        WrapCrossAlignment,
-        runApp;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Brightness, TextInputType;
 import 'package:flutter_icons/flutter_icons.dart'
     show FontAwesome, FontAwesome5Brands;
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart' show Hive;
 import 'package:hive_flutter/hive_flutter.dart';
@@ -74,6 +13,9 @@ import 'package:string_validator/string_validator.dart'
     show isEmail, isLength, isNumeric, normalizeEmail, stripLow, toString;
 import 'package:url_launcher/url_launcher.dart' show canLaunch, launch;
 import 'package:dio/dio.dart' show Dio;
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
+import 'layout/responsive_helper.dart';
 
 Future<void> main() async => Hive.initFlutter()
     .whenComplete(
@@ -95,10 +37,13 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) => ValueListenableBuilder(
         valueListenable: Hive.box('darkMode').listenable(),
         builder: (_, box, __) {
-          final _isDarkMode = box.get('darkMode', defaultValue: false);
+          final _isDarkMode = box.get('darkMode', defaultValue: true);
           return MaterialApp(
             themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
             darkTheme: ThemeData.dark().copyWith(
+              accentColor: const Color(0xffFCCFA8),
+              textSelectionColor: const Color(0xffFCCFA8),
+              cursorColor: const Color(0xffFCCFA8),
               textTheme: GoogleFonts.comfortaaTextTheme(
                 ThemeData(
                   primarySwatch: Colors.teal,
@@ -115,11 +60,21 @@ class Home extends StatelessWidget {
               body: const Center(
                 child: HomePage(),
               ),
-              floatingActionButton: FloatingActionButton(
-                mouseCursor: MaterialStateMouseCursor.clickable,
-                onPressed: () => box.put('darkMode', !_isDarkMode),
-                child:
-                    Icon(_isDarkMode ? FontAwesome.sun_o : FontAwesome.moon_o),
+              floatingActionButton: Builder(
+                builder: (context) => RaisedButton(
+                  mouseCursor: MaterialStateMouseCursor.clickable,
+                  color: Theme.of(context).accentColor,
+                  colorBrightness: Brightness.dark,
+                  shape: const CircleBorder(),
+                  onPressed: () => box.put('darkMode', !_isDarkMode),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Icon(
+                      _isDarkMode ? FontAwesome.sun_o : FontAwesome.moon_o,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
               ),
             ),
           );
@@ -127,135 +82,182 @@ class Home extends StatelessWidget {
       );
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scrollbar(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          physics: const BouncingScrollPhysics(),
-          primary: true,
-          children: <Widget>[
-            const SizedBox(
-              height: 64,
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
+  int selected = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  static final List<Widget> _content = [
+    Card(
+      shape: const CircleBorder(),
+      margin: const EdgeInsets.all(12),
+      child: Image.asset(
+        'assets/images/Profile.png',
+        isAntiAlias: true,
+        gaplessPlayback: true,
+        frameBuilder:
+            (_, Widget child, int frame, bool wasSynchronouslyLoaded) {
+          return wasSynchronouslyLoaded
+              ? child
+              : AnimatedOpacity(
+                  opacity: 1,
+                  duration: const Duration(milliseconds: 10),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+        },
+      ),
+    ),
+    const Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(24)),
+      ),
+      child: Info(),
+    ),
+    Image.asset(
+      'assets/images/svg.png',
+      width: 436,
+      isAntiAlias: true,
+      gaplessPlayback: true,
+      frameBuilder: (_, Widget child, int frame, bool wasSynchronouslyLoaded) {
+        return wasSynchronouslyLoaded
+            ? child
+            : AnimatedOpacity(
+                opacity: 1,
+                duration: const Duration(milliseconds: 10),
+                curve: Curves.easeOut,
+                child: child,
+              );
+      },
+    ),
+    const Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(24)),
+      ),
+      child: AboutMe(),
+    ),
+    const ProjectShowCase(),
+    ...[
+      const TechnicalSkills(),
+      const ContactMe(),
+    ]
+        .map(
+          (e) => Card(
+            elevation: 2,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
-            Wrap(
-              alignment: WrapAlignment.center,
-              runSpacing: 64,
-              spacing: 64,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/Profile.png',
-                  width: 436,
-                  isAntiAlias: true,
-                  frameBuilder: (_, Widget child, int frame,
-                      bool wasSynchronouslyLoaded) {
-                    return wasSynchronouslyLoaded
-                        ? child
-                        : AnimatedOpacity(
-                            opacity: frame == null ? 0 : 1,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeOut,
-                            child: child,
-                          );
-                  },
+            child: e,
+          ),
+        )
+        .toList(),
+    Center(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 32),
+        child: Text(
+            '© ${DateTime.now().year} Maheshwar Ravuri. All rights reserved.'),
+      ),
+    )
+  ]
+      .map(
+        (x) => SizedBox(
+          width: 500,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 32),
+            child: x,
+          ),
+        ),
+      )
+      .toList();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // if (isMobile(context))
+        NavigationRail(
+          selectedIndex: selected,
+          onDestinationSelected: (i) {
+            setState(() {
+              selected = i;
+            });
+
+            itemScrollController.scrollTo(
+                index: 3 + i,
+                duration: const Duration(
+                  milliseconds: 350,
                 ),
-                const SizedBox(
-                  width: 500,
-                  child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(24)),
-                    ),
-                    child: Info(),
+                curve: Curves.easeInOut);
+          },
+          groupAlignment: 0,
+          unselectedLabelTextStyle: const TextStyle(color: Colors.black),
+          labelType: NavigationRailLabelType.all,
+          backgroundColor: Theme.of(context).accentColor,
+          selectedLabelTextStyle: TextStyle(
+              color: Theme.of(context).accentColor,
+              backgroundColor: Colors.black54),
+          minWidth: isMobile(context) ? 52 : 72,
+          destinations: const ['About Me', 'Projects', 'Skills', 'Contact']
+              .map(
+                (x) => NavigationRailDestination(
+                  label: RotatedBox(
+                    quarterTurns: 3,
+                    child: Text(x),
                   ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 64,
-            ),
-            Wrap(
-              runAlignment: WrapAlignment.center,
-              runSpacing: 32,
-              spacing: 64,
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/svg.png',
-                  width: 436,
-                  isAntiAlias: true,
-                  frameBuilder: (_, Widget child, int frame,
-                      bool wasSynchronouslyLoaded) {
-                    return wasSynchronouslyLoaded
-                        ? child
-                        : AnimatedOpacity(
-                            opacity: frame == null ? 0 : 1,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeOut,
-                            child: child,
-                          );
-                  },
+                  icon: const SizedBox.shrink(),
                 ),
-                const SizedBox(
-                  width: 500,
-                  child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(24)),
-                    ),
-                    child: AboutMe(),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 64,
-            ),
-            const ProjectShowCase(),
-            const SizedBox(
-              height: 64,
-            ),
-            Wrap(
-              runAlignment: WrapAlignment.center,
-              alignment: WrapAlignment.center,
-              runSpacing: 32,
-              spacing: 64,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: const [
-                TechnicalSkills(),
-                ContactMe(),
-              ]
-                  .map(
-                    (e) => SizedBox(
-                      width: 500,
-                      child: Card(
-                        elevation: 2,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(24)),
+              )
+              .toList(),
+        ),
+        AnimationLimiter(
+          child: Expanded(
+            child: Scrollbar(
+              child: Center(
+                child: ScrollablePositionedList.builder(
+                  itemCount: _content.length,
+                  itemBuilder: (context, index) =>
+                      AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      horizontalOffset: -100,
+                      duration: const Duration(seconds: 1),
+                      child: FadeInAnimation(
+                        duration: const Duration(seconds: 1),
+                        child: Align(
+                          child: SizedBox(
+                            width: 500,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: _content.elementAt(index),
+                            ),
+                          ),
                         ),
-                        child: e,
                       ),
                     ),
-                  )
-                  .toList(),
-            ),
-            const SizedBox(
-              height: 64,
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 32),
-                child: Text(
-                    '© ${DateTime.now().year} Maheshwar Ravuri. All rights reserved.'),
+                  ),
+                  itemScrollController: itemScrollController,
+                  itemPositionsListener: itemPositionsListener,
+                ),
               ),
-            )
-          ],
+            ),
+          ),
         ),
-      );
+      ],
+    );
+  }
 }
 
 class Info extends StatelessWidget {
@@ -265,48 +267,54 @@ class Info extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
         children: [
           Align(
-            child: FloatingActionButton.extended(
+            child: RaisedButton(
+              disabledColor: Theme.of(context).accentColor,
               shape: const StadiumBorder(),
               highlightElevation: 2,
               elevation: 0,
               onPressed: null,
-              label: const Text(
-                "Hello I'm",
-                textScaleFactor: 1.5,
+              child: const Padding(
+                padding: EdgeInsets.all(12),
+                child: Text(
+                  "Hello I'm",
+                  style: TextStyle(color: Colors.black),
+                  textScaleFactor: 1.5,
+                ),
               ),
             ),
           ),
           const SizedBox(
             height: 16,
           ),
-          const ListTile(
-            leading: Icon(Icons.account_circle),
-            title: SelectableText(
+          ListTile(
+            leading: Icon(Icons.account_circle,
+                color: Theme.of(context).accentColor),
+            title: const SelectableText(
               'Maheshwar Ravuri',
-              textScaleFactor: 2,
+              textScaleFactor: 1,
               toolbarOptions: ToolbarOptions(
                 copy: true,
                 selectAll: true,
               ),
             ),
-            subtitle: Text(
+            subtitle: const Text(
               'Mobile Developer',
             ),
           ),
-          ...const [
+          ...[
             [
-              Icon(Icons.location_on),
+              Icon(Icons.location_on, color: Theme.of(context).accentColor),
               'Fresno, CA, United States',
             ],
             [
-              Icon(Icons.email),
+              Icon(Icons.email, color: Theme.of(context).accentColor),
               'maheshwar.ravuri@gmail.com',
             ],
             [
-              Icon(Icons.phone),
+              Icon(Icons.phone, color: Theme.of(context).accentColor),
               '+1 224 532 6151',
             ]
           ]
@@ -318,7 +326,6 @@ class Info extends StatelessWidget {
                     toolbarOptions: const ToolbarOptions(
                       copy: true,
                       selectAll: true,
-                      cut: true,
                     ),
                   ),
                 ),
@@ -362,16 +369,14 @@ class AboutMe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView(
-        padding: const EdgeInsets.all(
-          24,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const ListTile(
             title: SelectableText(
               'About Me',
-              textScaleFactor: 2,
+              textScaleFactor: 1.5,
               toolbarOptions: ToolbarOptions(
                 copy: true,
                 selectAll: true,
@@ -401,18 +406,27 @@ class AboutMe extends StatelessWidget {
               ['Python', 'https://www.python.org/'],
             ]
                 .map(
-                  (e) => FloatingActionButton.extended(
-                    mouseCursor: MaterialStateMouseCursor.clickable,
-                    highlightElevation: 2,
-                    elevation: 2,
-                    tooltip: 'Visit ${e.first} homepage',
-                    shape: const StadiumBorder(),
-                    onPressed: () async {
-                      if (await canLaunch(e.last)) {
-                        await launch(e.last);
-                      }
-                    },
-                    label: Text(e.first),
+                  (e) => Tooltip(
+                    message: 'Visit ${e.first} homepage',
+                    child: RaisedButton(
+                      mouseCursor: MaterialStateMouseCursor.clickable,
+                      color: Theme.of(context).accentColor,
+                      highlightElevation: 2,
+                      elevation: 2,
+                      shape: const StadiumBorder(),
+                      onPressed: () async {
+                        if (await canLaunch(e.last)) {
+                          await launch(e.last);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          e.first,
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
                   ),
                 )
                 .toList(),
@@ -430,7 +444,7 @@ class ProjectShowCase extends StatelessWidget {
           const Align(
             child: Text(
               'Project Showcase',
-              textScaleFactor: 2,
+              textScaleFactor: 1.5,
             ),
           ),
           const SizedBox(
@@ -470,34 +484,39 @@ class ProjectShowCase extends StatelessWidget {
                       minHeight: 125,
                       maxWidth: 500,
                     ),
-                    child: Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      child: Center(
-                        child: ListTile(
-                          title: Text(
-                            e.first,
-                            textScaleFactor: 2,
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Text(
-                              e.elementAt(1),
+                    child: Tooltip(
+                      message: 'Visit ${e.first}',
+                      child: InkWell(
+                        mouseCursor: MaterialStateMouseCursor.clickable,
+                        onTap: () async {
+                          if (await canLaunch(e.last)) {
+                            await launch(e.last);
+                          }
+                        },
+                        hoverColor: Theme.of(context).accentColor,
+                        customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Card(
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Center(
+                            child: ListTile(
+                              title: Text(
+                                e.first,
+                                textScaleFactor: 1.5,
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Text(
+                                  e.elementAt(1),
+                                ),
+                              ),
+                              trailing: Icon(
+                                Icons.open_in_new,
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
-                          ),
-                          trailing: IconButton(
-                            mouseCursor: MaterialStateMouseCursor.clickable,
-                            tooltip: 'Vist ${e.first}',
-                            icon: Icon(
-                              Icons.open_in_new,
-                              color: Theme.of(context).accentColor,
-                            ),
-                            onPressed: () async {
-                              if (await canLaunch(e.last)) {
-                                await launch(e.last);
-                              }
-                            },
                           ),
                         ),
                       ),
@@ -517,14 +536,12 @@ class TechnicalSkills extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding: const EdgeInsets.all(
-          24,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
         children: [
           const Align(
             child: Text(
               'Technical Skills',
-              textScaleFactor: 2,
+              textScaleFactor: 1.5,
             ),
           ),
           const SizedBox(
@@ -575,15 +592,13 @@ class _ContactMeState extends State<ContactMe> {
   @override
   Widget build(BuildContext context) => ListView(
         shrinkWrap: true,
-        padding: const EdgeInsets.all(
-          24,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const Align(
             child: Text(
               'Contact Me',
-              textScaleFactor: 2,
+              textScaleFactor: 1.5,
             ),
           ),
           const SizedBox(
@@ -676,58 +691,67 @@ class _ContactMeState extends State<ContactMe> {
                   maxLines: 7,
                 ),
                 Center(
-                  child: FloatingActionButton.extended(
-                    mouseCursor: MaterialStateMouseCursor.clickable,
-                    elevation: 2,
-                    highlightElevation: 4,
-                    tooltip: 'Submit Details',
-                    hoverElevation: 4,
-                    icon: const Icon(Icons.send),
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        final _timestamp = DateFormat('yMMMd')
-                            .add_jms()
-                            .format(
-                              DateTime.now(),
-                            )
-                            .trim();
-                        final _ipData = '?name='
-                            '$name'
-                            '&phone=$phone'
-                            '&email=$email'
-                            '&details=$details'
-                            '&timestamp=$_timestamp';
-                        const url =
-                            'https://script.google.com/macros/s/AKfycbyQNVoxSjwWskTGpjO5ad11syVkcC3y-WLmalFsBn_8ujeFV3-B/exec';
-
-                        try {
-                          await Dio()
-                              .get(
-                                url + _ipData,
+                  child: Tooltip(
+                    message: 'Submit Details',
+                    child: RaisedButton.icon(
+                      mouseCursor: MaterialStateMouseCursor.clickable,
+                      elevation: 2,
+                      shape: const StadiumBorder(),
+                      highlightElevation: 4,
+                      color: Theme.of(context).accentColor,
+                      icon: const Icon(Icons.send, color: Colors.black),
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          final _timestamp = DateFormat('yMMMd')
+                              .add_jms()
+                              .format(
+                                DateTime.now(),
                               )
-                              .then(
-                                (value) => value.statusCode == 200
-                                    ? Scaffold.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Submission Recevied',
+                              .trim();
+                          final _ipData = '?name='
+                              '$name'
+                              '&phone=$phone'
+                              '&email=$email'
+                              '&details=$details'
+                              '&timestamp=$_timestamp';
+                          const url =
+                              'https://script.google.com/macros/s/AKfycbyQNVoxSjwWskTGpjO5ad11syVkcC3y-WLmalFsBn_8ujeFV3-B/exec';
+
+                          try {
+                            await Dio()
+                                .get(
+                                  url + _ipData,
+                                )
+                                .then(
+                                  (value) => value.statusCode == 200
+                                      ? Scaffold.of(context).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Submission Recevied',
+                                            ),
+                                          ),
+                                        )
+                                      : Scaffold.of(context).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Insufficient information provided',
+                                            ),
                                           ),
                                         ),
-                                      )
-                                    : Scaffold.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Insufficient information provided',
-                                          ),
-                                        ),
-                                      ),
-                              );
-                        } on Exception catch (e) {
-                          Exception(e);
+                                );
+                          } on Exception catch (e) {
+                            Exception(e);
+                          }
                         }
-                      }
-                    },
-                    label: const Text('Send'),
+                      },
+                      label: const Padding(
+                        padding: EdgeInsets.fromLTRB(8, 12, 8, 12),
+                        child: Text(
+                          'Send',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ]

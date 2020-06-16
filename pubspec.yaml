@@ -11,6 +11,7 @@ dependencies:
   percent_indicator:
   # flutter_page_indicators:
   smooth_page_indicator:
+  scrollable_positioned_list:
 
   #S\e
   provider:
