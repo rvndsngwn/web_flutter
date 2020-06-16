@@ -3,37 +3,64 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "main.dart.js": "fd589f3c501a55e400321cfb478a9c02",
-"assets/fonts/MaterialIcons-Regular.ttf": "c5589b7205a16dc844ff989718416259",
-"assets/FontManifest.json": "a6513abd34e6553b30f43e8d012aa298",
+  "index.html": "3709185effbdab151b0d0f666ac80ff4",
+"/": "3709185effbdab151b0d0f666ac80ff4",
+"CNAME": "c9b809a2c2b0acb42d158bdb5f23a432",
+"main.dart.js": "e426e97a7b4eb481e344d3d864985c27",
+"favicon.png": "5dcef449791fa27946b3d35ad8803796",
+"icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
+"icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
+"manifest.json": "b5aa9bc84ed91a6d895463d06675bb1c",
+".git/config": "30f9ffd7fe056fa439866ab3d01a46d2",
+".git/objects/pack/pack-62d52330bb54cff1eb75766747753b70e5f1eb82.pack": "14ce2bd0ddee148cbb1ed6dc7c02ef81",
+".git/objects/pack/pack-62d52330bb54cff1eb75766747753b70e5f1eb82.idx": "d326aad973eb986b87e663fe7875bd01",
+".git/HEAD": "4cf2d64e44205fe628ddd534e1151b58",
+".git/info/exclude": "036208b4a1ab4a235d75c181e685e5a3",
+".git/logs/HEAD": "6b324a59463068b456169c3a0002caa0",
+".git/logs/refs/heads/master": "6b324a59463068b456169c3a0002caa0",
+".git/logs/refs/remotes/origin/HEAD": "1b9bd4f05c959877dbb6a7d037810683",
+".git/description": "a0a7c3fff21f2aea3cfa1d0316dd816c",
+".git/hooks/commit-msg.sample": "579a3c1e12a1e74a98169175fb913012",
+".git/hooks/pre-rebase.sample": "56e45f2bcbc8226d2b4200f7c46371bf",
+".git/hooks/pre-commit.sample": "e4db8c12ee125a8a085907b757359ef0",
+".git/hooks/applypatch-msg.sample": "ce562e08d8098926a3862fc6e7905199",
+".git/hooks/fsmonitor-watchman.sample": "ecbb0cb5ffb7d773cd5b2407b210cc3b",
+".git/hooks/pre-receive.sample": "2ad18ec82c20af7b5926ed9cea6aeedd",
+".git/hooks/prepare-commit-msg.sample": "2b5c047bdb474555e1787db32b2d2fc5",
+".git/hooks/post-update.sample": "2b7ea5cee3c49ff53d41e00785eb974c",
+".git/hooks/pre-merge-commit.sample": "39cb268e2a85d436b9eb6f47614c3cbc",
+".git/hooks/pre-applypatch.sample": "054f9ffb8bfe04a599751cc757226dda",
+".git/hooks/pre-push.sample": "3c5989301dd4b949dfa1f43738a22819",
+".git/hooks/update.sample": "517f14b9239689dff8bda3022ebd9004",
+".git/refs/heads/master": "08a4199fb2ba15e8801b3ac0bdd382ed",
+".git/refs/remotes/origin/HEAD": "681f9548f9530d17a2f1b22eb409deb2",
+".git/index": "c64454b27dc543c090715d7211545b06",
+".git/packed-refs": "ea4088ffe83687b2948c718fa362f692",
 "assets/LICENSE": "9b6f17943bab6f2c9e60358bf00e49f5",
-"assets/packages/flutter_markdown/assets/logo.png": "67642a0b80f3d50277c44cde8f450e50",
-"assets/packages/flutter_icons/fonts/FontAwesome.ttf": "b06871f281fee6b241d60582ae9369b9",
-"assets/packages/flutter_icons/fonts/Zocial.ttf": "5cdf883b18a5651a29a4d1ef276d2457",
-"assets/packages/flutter_icons/fonts/FontAwesome5_Solid.ttf": "b70cea0339374107969eb53e5b1f603f",
-"assets/packages/flutter_icons/fonts/AntDesign.ttf": "3a2ba31570920eeb9b1d217cabe58315",
-"assets/packages/flutter_icons/fonts/FontAwesome5_Brands.ttf": "c39278f7abfc798a241551194f55e29f",
-"assets/packages/flutter_icons/fonts/EvilIcons.ttf": "140c53a7643ea949007aa9a282153849",
-"assets/packages/flutter_icons/fonts/SimpleLineIcons.ttf": "d2285965fe34b05465047401b8595dd0",
-"assets/packages/flutter_icons/fonts/FontAwesome5_Regular.ttf": "f6c6f6c8cb7784254ad00056f6fbd74e",
-"assets/packages/flutter_icons/fonts/MaterialCommunityIcons.ttf": "3c851d60ad5ef3f2fe43ebd263490d78",
-"assets/packages/flutter_icons/fonts/Foundation.ttf": "e20945d7c929279ef7a6f1db184a4470",
-"assets/packages/flutter_icons/fonts/MaterialIcons.ttf": "a37b0c01c0baf1888ca812cc0508f6e2",
+"assets/AssetManifest.json": "86922c90b9707357f1c630f577b8862c",
+"assets/NOTICES": "f2cbfcf80f4767c5cc66cba18fc60707",
+"assets/FontManifest.json": "94a2494f1e7ff74a7d0b6cf4f3d4e39d",
+"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "4b9123f59422885f8f42d2d613f0bca3",
+"assets/packages/flutter_icons/fonts/Octicons.ttf": "73b8cff012825060b308d2162f31dbb2",
 "assets/packages/flutter_icons/fonts/Feather.ttf": "6beba7e6834963f7f171d3bdd075c915",
 "assets/packages/flutter_icons/fonts/Entypo.ttf": "744ce60078c17d86006dd0edabcd59a7",
+"assets/packages/flutter_icons/fonts/FontAwesome5_Brands.ttf": "c39278f7abfc798a241551194f55e29f",
+"assets/packages/flutter_icons/fonts/MaterialCommunityIcons.ttf": "3c851d60ad5ef3f2fe43ebd263490d78",
+"assets/packages/flutter_icons/fonts/AntDesign.ttf": "3a2ba31570920eeb9b1d217cabe58315",
+"assets/packages/flutter_icons/fonts/Foundation.ttf": "e20945d7c929279ef7a6f1db184a4470",
 "assets/packages/flutter_icons/fonts/weathericons.ttf": "4618f0de2a818e7ad3fe880e0b74d04a",
 "assets/packages/flutter_icons/fonts/Ionicons.ttf": "b2e0fc821c6886fb3940f85a3320003e",
-"assets/packages/flutter_icons/fonts/Octicons.ttf": "73b8cff012825060b308d2162f31dbb2",
-"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "4b9123f59422885f8f42d2d613f0bca3",
-"assets/assets/images/Profile.png": "6725584f42655d9130cd5adb35510115",
-"assets/assets/images/svg.png": "02ad9ee779a9705de91cc5619d7ebfc3",
-"assets/AssetManifest.json": "86922c90b9707357f1c630f577b8862c",
-"favicon.png": "5dcef449791fa27946b3d35ad8803796",
-"manifest.json": "b5aa9bc84ed91a6d895463d06675bb1c",
-"icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
-"index.html": "3709185effbdab151b0d0f666ac80ff4",
-"/": "3709185effbdab151b0d0f666ac80ff4"
+"assets/packages/flutter_icons/fonts/FontAwesome5_Solid.ttf": "b70cea0339374107969eb53e5b1f603f",
+"assets/packages/flutter_icons/fonts/FontAwesome5_Regular.ttf": "f6c6f6c8cb7784254ad00056f6fbd74e",
+"assets/packages/flutter_icons/fonts/FontAwesome.ttf": "b06871f281fee6b241d60582ae9369b9",
+"assets/packages/flutter_icons/fonts/Zocial.ttf": "5cdf883b18a5651a29a4d1ef276d2457",
+"assets/packages/flutter_icons/fonts/EvilIcons.ttf": "140c53a7643ea949007aa9a282153849",
+"assets/packages/flutter_icons/fonts/SimpleLineIcons.ttf": "d2285965fe34b05465047401b8595dd0",
+"assets/packages/flutter_icons/fonts/MaterialIcons.ttf": "a37b0c01c0baf1888ca812cc0508f6e2",
+"assets/packages/flutter_markdown/assets/logo.png": "67642a0b80f3d50277c44cde8f450e50",
+"assets/fonts/MaterialIcons-Regular.ttf": "c5589b7205a16dc844ff989718416259",
+"assets/assets/images/Profile.png": "5d747b10a6af14bbc010b41d33b1656a",
+"assets/assets/images/svg.png": "02ad9ee779a9705de91cc5619d7ebfc3"
 };
 
 // The application shell files that are downloaded before a service worker can
@@ -42,7 +69,7 @@ const CORE = [
   "/",
 "main.dart.js",
 "index.html",
-"assets/LICENSE",
+"assets/NOTICES",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
 
@@ -147,7 +174,7 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener('message', (event) => {
   // SkipWaiting can be used to immediately activate a waiting service worker.
   // This will also require a page refresh triggered by the main worker.
-  if (event.message == 'skipWaiting') {
+  if (event.data == 'skipWaiting') {
     return self.skipWaiting();
   }
 
@@ -171,8 +198,8 @@ async function downloadOffline() {
   }
   for (var resourceKey in Object.keys(RESOURCES)) {
     if (!currentContent[resourceKey]) {
-      resources.add(resourceKey);
+      resources.push(resourceKey);
     }
   }
-  return Cache.addAll(resources);
+  return contentCache.addAll(resources);
 }
