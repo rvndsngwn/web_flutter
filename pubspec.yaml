@@ -2,6 +2,9 @@ name: Portfolio
 description: Personal Portfolio Website.
 version: 1.0.0+1
 
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+
 dependencies:
   flutter:
     sdk: flutter
@@ -24,9 +27,6 @@ dependencies:
   logger:
   string_validator:
   hive_flutter:
-    git:
-      url: git://github.com/Mravuri96/hive.git #Enables macos Support
-      path: hive_flutter
 
   flutter_staggered_animations:
   url_launcher:
